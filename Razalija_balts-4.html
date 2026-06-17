@@ -1,0 +1,1994 @@
+﻿<!doctype html>
+<html lang="lv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Razalija — svaigi ziedi no Mežaparka</title>
+  <meta name="description" content="Razalija — svaigi ziedi un pušķi no Mežaparka: gatavi pušķi, pušķi svētkiem un korporatīvie pasūtījumi." />
+
+  <!-- Fonts: preconnect + non-blocking load -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600;700&family=Inter:wght@400;500;600;700&display=swap" />
+
+
+  <style>
+    :root{
+      /* Light base */
+      --bg0:#ffffff;
+      --bg1:#fbfbfe;
+
+
+      /* Ink (softer than pure black) */
+      --ink: 43, 30, 63;   /* deep violet-ink */
+      --ink2: 63, 46, 92;  /* muted violet */
+
+
+      /* Cards / surfaces */
+      --card: rgba(255,255,255,.78);
+      --stroke: rgba(var(--ink), .10);
+
+
+      /* Text */
+      --text: rgba(var(--ink), .92);
+      --muted: rgba(var(--ink2), .78);
+
+
+      /* Accent (softened) */
+      --violet:#7c3aed;
+      --pink:#ec4899;
+      --sky:#38bdf8;
+
+
+      /* Shadows for light UI (softened, unified) */
+      --shadow: 0 12px 36px rgba(18,12,28,.07);
+      --shadow2: 0 8px 22px rgba(18,12,28,.06);
+      --shadow-hover: 0 18px 48px rgba(18,12,28,.10);
+
+
+      /* Unified radius scale */
+      --r-control: 14px;
+      --r-card: 20px;
+      --r-panel: 26px;
+      --radius: 20px;   /* legacy alias */
+      --radius2: 26px;  /* legacy alias */
+
+      /* Glass blur (lighter = cleaner, faster) */
+      --glass-blur: 12px;
+
+
+      --max: 1120px;
+
+
+      --bouquetPanelH: clamp(460px, 64vh, 640px);
+
+
+      --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --font-head: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+    }
+
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      font: 16px/1.6 var(--font-body);
+
+
+      /* White background + very subtle pastel aura */
+      background:
+        radial-gradient(1100px 800px at 15% 0%, rgba(124,58,237,.09) 0%, rgba(124,58,237,0) 62%),
+        radial-gradient(900px 700px at 85% 10%, rgba(236,72,153,.08) 0%, rgba(236,72,153,0) 58%),
+        radial-gradient(900px 700px at 60% 95%, rgba(56,189,248,.07) 0%, rgba(56,189,248,0) 58%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+
+
+      overflow-x:hidden;
+    }
+
+
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+
+    /* Top nav */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.72);
+      border-bottom: 1px solid rgba(var(--ink), .08);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:14px 0;
+    }
+
+
+    /* Brand: title + address (no logo) */
+    .brand{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:2px;
+      line-height:1.05;
+    }
+    .brand-name{
+      font-family: var(--font-head);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      font-size: 20px;
+      color: var(--text);
+    }
+    .brand-address{
+      font-family: var(--font-body);
+      font-size: 12.5px;
+      color: rgba(var(--ink2), .72);
+    }
+
+
+    .nav-links{
+      display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end;
+      align-items:center;
+    }
+    .chip{
+      padding:9px 12px;
+      border-radius: 999px;
+      background: rgba(var(--ink), .045);
+      border: 1px solid rgba(var(--ink), .10);
+      color: rgba(var(--ink), .82);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      font-size: 14px;
+      user-select:none;
+    }
+    .chip:hover{
+      transform: translateY(-2px);
+      background: rgba(var(--ink), .06);
+      border-color: rgba(var(--ink), .14);
+    }
+    .cta{
+      padding:10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--ink), .08);
+      background: linear-gradient(135deg, rgba(124,58,237,.26), rgba(236,72,153,.20), rgba(56,189,248,.18));
+      box-shadow: 0 14px 30px rgba(18,12,28,.12);
+      transition: transform .18s ease, filter .18s ease;
+      font-weight: 800;
+      font-size: 14px;
+      white-space:nowrap;
+      color: rgba(var(--ink), .92);
+    }
+    .cta:hover{ transform: translateY(-2px); filter:saturate(1.06) }
+
+
+    @media (max-width: 760px){
+      .nav-links .chip.nav-hide-mobile{ display:none; }
+    }
+
+
+    /* Hero */
+    .hero{
+      position:relative;
+      padding: 44px 0 22px;
+    }
+    .hero-wide{
+      padding: 26px 24px 22px;
+      min-height: 460px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      gap: 14px;
+      border-radius: var(--radius2);
+      position:relative;
+      overflow:hidden;
+    }
+    @media (max-width: 760px){
+      .hero-wide{ min-height: 520px; }
+    }
+
+
+    .glass{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      position:relative;
+      overflow:hidden;
+    }
+    .lift{
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .lift:hover{
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(var(--ink), .14);
+    }
+
+
+    /* HERO CARD stays transparent (no milky glass) */
+    #heroCard{
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 16px 50px rgba(18,12,28,.12);
+    }
+
+
+    /* Hero slideshow (crossfade) */
+    .hero-slides{
+      position:absolute; inset:0;
+      z-index:0;
+      pointer-events:none;
+      background: linear-gradient(135deg, #efe4ff 0%, #fbe6f2 55%, #e6f3ff 100%);
+    }
+    .hero-slide{
+      position:absolute; inset:0;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.02) contrast(1.02);
+      transform: scale(1.03);
+      opacity: 0;
+      transition: opacity 1.1s ease;
+    }
+    .hero-slide.active{ opacity: 1; }
+
+
+    /* ✅ NEW: dark vignette on top of images (instead of text background) */
+    .hero-slides::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:1;
+      background:
+        /* мягкая темнота снизу под текст */
+        linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.52) 100%),
+        /* виньетка по краям */
+        radial-gradient(1200px 760px at 50% 45%, rgba(0,0,0,0) 35%, rgba(0,0,0,.40) 100%);
+      opacity: .95;
+    }
+
+
+    .hero-content{
+      position:relative; z-index:2;
+      max-width: 760px;
+      display:flex; flex-direction:column; gap:14px;
+    }
+
+
+    /* ❌ REMOVED: no smoke/plate behind hero text */
+    .hero-content::before{
+      content:none;
+    }
+
+
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size: 13px;
+      color: rgba(255,255,255,.86);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      width: fit-content;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), rgba(255,255,255,0) 60%),
+                  linear-gradient(135deg, var(--violet), var(--pink), var(--sky));
+      box-shadow: 0 0 0 6px rgba(236,72,153,.10);
+    }
+
+
+    /* Headings */
+    h1, h2, h3{
+      font-family: var(--font-head);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(34px, 4.2vw, 56px);
+      line-height: 1.04;
+      color: rgba(255,255,255,.96);
+      text-shadow: 0 10px 30px rgba(0,0,0,.30);
+    }
+    .sub{
+      margin:0;
+      font-size: 16px;
+      color: rgba(255,255,255,.82);
+      max-width: 60ch;
+      text-shadow: 0 10px 30px rgba(0,0,0,.22);
+    }
+    .hero-actions{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;
+    }
+    .btn{
+      padding: 12px 14px;
+      border-radius: var(--r-control);
+      border: 1px solid rgba(var(--ink), .12);
+      background: rgba(255,255,255,.55);
+      color: rgba(var(--ink), .88);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      user-select:none;
+      cursor:pointer;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.72);
+      border-color: rgba(var(--ink), .16);
+      box-shadow: 0 14px 28px rgba(18,12,28,.08);
+    }
+    .btn.primary{
+      color: #fff;
+      border-color: rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(236,72,153,.88), rgba(56,189,248,.82));
+      box-shadow: 0 16px 34px rgba(18,12,28,.14);
+    }
+    .btn.primary:hover{
+      filter: saturate(1.06);
+      box-shadow: 0 18px 40px rgba(18,12,28,.16);
+    }
+    .btn.small{
+      padding: 10px 12px;
+      border-radius: var(--r-control);
+      font-size: 14px;
+    }
+
+
+    /* Section */
+    section{ padding: 26px 0; }
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      margin-bottom: 14px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size: 24px;
+      color: var(--text);
+    }
+    .section-title p{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 62ch;
+    }
+
+
+    /* Services */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 980px){
+      .cards{ grid-template-columns: 1fr; }
+    }
+    .card{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(var(--ink), .10);
+      box-shadow: var(--shadow2);
+      position:relative;
+      overflow:hidden;
+
+
+      display:flex;
+      flex-direction:column;
+      min-height: 260px;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 220px at 10% 0%, rgba(124,58,237,.12), rgba(124,58,237,0) 60%),
+        radial-gradient(520px 220px at 90% 10%, rgba(236,72,153,.10), rgba(236,72,153,0) 55%),
+        radial-gradient(520px 220px at 70% 100%, rgba(56,189,248,.08), rgba(56,189,248,0) 55%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .card > *{ position:relative; z-index:2 }
+    .icon{
+      width:42px; height:42px; border-radius: 16px;
+      border: 1px solid rgba(var(--ink), .10);
+      background: rgba(255,255,255,.70);
+      display:grid; place-items:center;
+      margin-bottom: 10px;
+      box-shadow: 0 12px 22px rgba(18,12,28,.08);
+    }
+    .card h3{ margin:0 0 6px; font-size: 20px; color: var(--text) }
+    .card .desc{ margin:0 0 12px; color: var(--muted) }
+    .price{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--ink), .10);
+      background: rgba(255,255,255,.60);
+      color: rgba(var(--ink), .74);
+      font-size: 13px;
+      width: fit-content;
+      margin-bottom: 12px;
+    }
+    .card .actions{
+      margin-top:auto;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-start;
+      align-items:flex-end;
+    }
+
+
+    /* Bouquets */
+    .bouquets{
+      display:grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 980px){
+      .bouquets{ grid-template-columns: 1fr; }
+    }
+
+    .bouquet-left,
+    .bouquet-right{
+      padding: 16px;
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+    }
+
+    /* Square preview */
+    .bouquet-frame{
+      position:relative;
+      border-radius: var(--r-card);
+      overflow:hidden;
+      border: 1px solid rgba(var(--ink), .10);
+      background: rgba(var(--ink), .04);
+    }
+    .bouquet-img-wrap{
+      position:relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;            /* square images fit perfectly */
+      border-radius: var(--r-card);
+      overflow:hidden;
+      cursor: zoom-in;
+    }
+    .bouquet-img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.02);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .bouquet-img.active{ opacity: 1; transform: scale(1.00); }
+
+    .bouquet-badge{
+      position:absolute; left:12px; bottom:12px; z-index:2;
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(var(--ink), .08);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      font-size: 13px; font-weight: 600; color: var(--text);
+      box-shadow: var(--shadow2);
+    }
+    .bouquet-badge .price{ color: var(--violet); font-weight: 700; }
+
+    .bouquet-info{
+      padding: 14px 14px;
+      border-radius: var(--r-card);
+      border: 1px solid rgba(var(--ink), .10);
+      background: rgba(255,255,255,.60);
+    }
+    .bouquet-info .label{color: rgba(var(--ink2), .72); font-size: 13px}
+    .bouquet-info .value{font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: var(--text)}
+    .bouquet-info .hint{color: rgba(var(--ink2), .76); font-size: 13.5px; margin-top:6px}
+
+    /* Quantity + total */
+    .qty-row{
+      display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    }
+    .qty-label{ font-size:13px; color: var(--muted) }
+    .qty{
+      display:inline-flex; align-items:center; gap:2px;
+      border:1px solid rgba(var(--ink), .12);
+      border-radius:999px;
+      background: rgba(255,255,255,.62);
+      padding:4px;
+    }
+    .qty-btn{
+      width:34px; height:34px; border-radius:999px;
+      border:none; background:transparent; cursor:pointer;
+      font-size:20px; line-height:1; color: var(--text);
+      display:grid; place-items:center;
+      transition: background .15s ease;
+    }
+    .qty-btn:hover{ background: rgba(var(--ink), .06) }
+    .qty-num{ min-width:30px; text-align:center; font-weight:700; font-size:16px }
+    .qty-total{ margin-left:auto; font-weight:800; font-size:18px; letter-spacing:-.01em; color: var(--text) }
+    .qty-total small{ font-weight:500; font-size:12px; color: var(--muted); margin-right:5px }
+
+    .bouquet-order{ display:flex; gap:10px; flex-wrap:wrap }
+    .bouquet-order .btn{ width:100%; justify-content:center }
+
+    /* Square thumbnail gallery (full width below) */
+    .bouquet-gallery{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    .bthumb{
+      position:relative;
+      border-radius: var(--r-card);
+      border: 1px solid rgba(var(--ink), .10);
+      background: rgba(255,255,255,.62);
+      overflow:hidden;
+      cursor:pointer;
+      aspect-ratio: 1 / 1;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .bthumb:hover{
+      transform: translateY(-3px);
+      border-color: rgba(var(--ink), .16);
+      box-shadow: var(--shadow2);
+    }
+    .bthumb img{ width:100%; height:100%; object-fit: cover; display:block }
+    .bthumb .tag{
+      position:absolute; left:9px; bottom:9px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(var(--ink), .08);
+      font-size: 12px;
+      color: rgba(var(--ink), .86);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      max-width: calc(100% - 18px);
+      overflow:hidden; text-overflow: ellipsis; white-space:nowrap;
+    }
+    .bthumb .priceTag{
+      position:absolute; right:9px; top:9px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(var(--ink), .08);
+      font-size: 12px;
+      color: rgba(var(--ink), .86);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      white-space:nowrap;
+    }
+    .bthumb .check{
+      position:absolute; top:9px; left:9px; z-index:3;
+      width:24px; height:24px; border-radius:50%;
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      display:none; place-items:center;
+      color:#fff; box-shadow: 0 4px 10px rgba(124,58,237,.4);
+    }
+    .bthumb .check svg{ width:13px; height:13px; fill:#fff }
+    .bthumb.active{
+      border-color: rgba(124,58,237,.55);
+      box-shadow: 0 0 0 2px rgba(124,58,237,.35), var(--shadow2);
+    }
+    .bthumb.active .check{ display:grid }
+
+    /* Zoom button on preview */
+    .zoom-btn{
+      position:absolute; top:12px; right:12px; z-index:3;
+      width:40px; height:40px; border-radius:50%;
+      border:1px solid rgba(var(--ink), .08);
+      background: rgba(255,255,255,.86);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      cursor:pointer; display:grid; place-items:center;
+      box-shadow: var(--shadow2);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .zoom-btn:hover{ transform: scale(1.06); background:#fff }
+    .zoom-btn svg{ width:20px; height:20px; fill: var(--violet) }
+
+    /* Cart */
+    .cart{ margin-top:14px; padding:18px }
+    .cart-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:12px }
+    .cart-head h3{ margin:0; font-size:18px }
+    .cart-count{ font-size:13px; color: var(--muted) }
+    .cart-items{ display:flex; flex-direction:column; gap:10px }
+    .cart-empty{ color: var(--muted); font-size:14px; padding:8px 0 }
+    .cart-item{
+      display:flex; align-items:center; gap:12px;
+      padding:10px; border-radius: var(--r-card);
+      border:1px solid rgba(var(--ink), .08);
+      background: rgba(255,255,255,.55);
+    }
+    .cart-thumb{ width:52px; height:52px; border-radius:12px; object-fit:cover; flex:0 0 auto; background:rgba(var(--ink),.05) }
+    .cart-meta{ flex:1 1 auto; min-width:0 }
+    .cart-name{ font-weight:600; font-size:14.5px; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+    .cart-unit{ font-size:12.5px; color:var(--muted) }
+    .cart-qty{
+      display:inline-flex; align-items:center; gap:2px;
+      border:1px solid rgba(var(--ink), .12); border-radius:999px;
+      background:#fff; padding:3px;
+    }
+    .cart-qty button{
+      width:28px; height:28px; border:none; background:transparent; cursor:pointer;
+      font-size:17px; line-height:1; color:var(--text); border-radius:999px;
+      display:grid; place-items:center; transition: background .15s ease;
+    }
+    .cart-qty button:hover{ background: rgba(var(--ink), .06) }
+    .cart-qty span{ min-width:22px; text-align:center; font-weight:700; font-size:14px }
+    .cart-line{ font-weight:700; font-size:14.5px; min-width:64px; text-align:right; color:var(--text) }
+    .cart-remove{
+      flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+      border:1px solid rgba(var(--ink), .10); background:rgba(255,255,255,.7);
+      cursor:pointer; color: rgba(var(--ink), .55); font-size:16px; line-height:1;
+      display:grid; place-items:center; transition: color .15s ease, border-color .15s ease;
+    }
+    .cart-remove:hover{ color:#e11d6b; border-color: rgba(225,29,107,.4) }
+    .cart-foot{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      margin-top:14px; padding-top:14px; border-top:1px solid rgba(var(--ink), .08);
+      flex-wrap:wrap;
+    }
+    .cart-total{ font-size:14px; color:var(--muted); display:flex; align-items:baseline; gap:8px }
+    .cart-total span{ font-size:22px; font-weight:800; letter-spacing:-.01em; color:var(--text) }
+    .cart-foot .btn:disabled{ opacity:.5; cursor:not-allowed; box-shadow:none }
+    @media (max-width:560px){
+      .cart-foot{ flex-direction:column; align-items:stretch }
+      .cart-foot .btn{ width:100% }
+      .cart-line{ min-width:54px }
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed; inset:0; z-index:120;
+      display:none; align-items:center; justify-content:center;
+      gap:8px; padding:20px;
+      background: rgba(20,12,28,.82);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .lightbox.open{ display:flex }
+    .lb-figure{
+      margin:0; max-width:min(92vw, 680px);
+      display:flex; flex-direction:column; align-items:center; gap:14px;
+    }
+    .lb-figure img{
+      max-width:100%; max-height:72vh; border-radius:18px; display:block;
+      box-shadow: 0 30px 80px rgba(0,0,0,.5);
+      background: rgba(255,255,255,.06);
+    }
+    .lb-caption{
+      display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center;
+      color:#fff; font-size:16px; font-weight:600;
+    }
+    .lb-price{ color:#f9c8e4; font-weight:700 }
+    .lb-add{ padding:10px 18px }
+    .lb-close{
+      position:absolute; top:16px; right:18px;
+      width:44px; height:44px; border-radius:50%;
+      border:none; background:rgba(255,255,255,.14); color:#fff;
+      font-size:26px; line-height:1; cursor:pointer;
+      display:grid; place-items:center; transition: background .15s ease;
+    }
+    .lb-close:hover{ background:rgba(255,255,255,.26) }
+    .lb-nav{
+      flex:0 0 auto; width:48px; height:48px; border-radius:50%;
+      border:none; background:rgba(255,255,255,.14); color:#fff;
+      font-size:28px; line-height:1; cursor:pointer;
+      display:grid; place-items:center; transition: background .15s ease;
+    }
+    .lb-nav:hover{ background:rgba(255,255,255,.26) }
+    @media (max-width:600px){
+      .lb-nav{ position:absolute; bottom:18px; width:44px; height:44px }
+      .lb-prev{ left:24px } .lb-next{ right:24px }
+    }
+
+
+    /* Contact */
+    .contact{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .contact{ grid-template-columns: 1fr; }
+    }
+    .contact-info{ padding: 18px }
+    .contact-info h3{ margin: 0 0 8px; font-size: 20px; color: var(--text) }
+    .contact-info p{ margin: 0 0 12px; color: var(--muted) }
+    .socials{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 8px }
+    .social{
+      padding: 10px 12px;
+      border-radius: var(--r-control);
+      border: 1px solid rgba(var(--ink), .12);
+      background: rgba(255,255,255,.58);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      font-weight: 800;
+      font-size: 14px;
+      color: rgba(var(--ink), .88);
+    }
+    .social:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.74);
+      border-color: rgba(var(--ink), .16);
+      box-shadow: 0 14px 26px rgba(18,12,28,.08);
+    }
+
+
+    form{
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    label{ font-size: 13px; color: var(--muted) }
+    input, select, textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: var(--r-control);
+      border: 1px solid rgba(var(--ink), .12);
+      background: rgba(255,255,255,.66);
+      color: rgba(var(--ink), .92);
+      outline:none;
+      transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+      font-family: var(--font-body);
+    }
+    textarea{ min-height: 110px; resize: vertical }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(236,72,153,.35);
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 10px 22px rgba(236,72,153,.08);
+    }
+    .form-row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px }
+    @media (max-width: 560px){
+      .form-row{ grid-template-columns: 1fr; }
+    }
+
+
+    .note{
+      font-size: 12px;
+      color: rgba(var(--ink2), .70);
+      margin-top: 8px;
+      white-space:pre-line;
+    }
+    #selectedBouquetNote{ margin-top: 10px; }
+
+
+    /* ====== WhatsApp chat (order via WhatsApp) ====== */
+    .wa-chat{
+      padding: 0;
+      overflow: hidden;
+      display:flex;
+      flex-direction:column;
+      border-radius: var(--radius2);
+      min-height: 540px;
+      background:#efeae2;
+    }
+
+    /* Header */
+    .wa-header{
+      display:flex; align-items:center; gap:12px;
+      padding: 11px 14px;
+      background: linear-gradient(135deg,#7c3aed 0%, #a23ad6 48%, #ec4899 100%);
+      color:#fff;
+      flex:0 0 auto;
+    }
+    .wa-avatar{
+      width:40px; height:40px; border-radius:50%;
+      display:grid; place-items:center;
+      font-family: var(--font-head); font-weight:600; font-size:17px;
+      color:#7c3aed; background:#fff;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.55);
+      flex:0 0 auto; overflow:hidden;
+    }
+    .wa-avatar img{ width:100%; height:100%; object-fit:cover }
+    .wa-peer{ flex:1 1 auto; min-width:0 }
+    .wa-peer-name{ font-family: var(--font-body); font-weight:600; font-size:15.5px; line-height:1.15; letter-spacing:.01em }
+    .wa-peer-status{ display:flex; align-items:center; gap:6px; font-size:12px; color:rgba(255,255,255,.85); margin-top:1px }
+    .wa-status-dot{ width:7px; height:7px; border-radius:50%; background:#ffe1f1; box-shadow:0 0 0 3px rgba(255,225,241,.30) }
+    .wa-head-icons{ display:flex; gap:18px; opacity:.9; flex:0 0 auto }
+    .wa-head-icons svg{ width:19px; height:19px; fill:#fff }
+
+    /* Body / wallpaper */
+    .wa-body{
+      flex:1 1 auto;
+      padding: 14px 12px 16px;
+      display:flex; flex-direction:column; gap:6px;
+      background-color:#f6f1fb;
+      background-image:
+        radial-gradient(130% 120% at 0% 0%, rgba(255,255,255,.65), rgba(255,255,255,0) 55%),
+        radial-gradient(120% 120% at 100% 100%, rgba(236,72,153,.06), rgba(236,72,153,0) 55%),
+        radial-gradient(rgba(124,58,237,.05) 1px, transparent 1.4px);
+      background-size: auto, auto, 26px 26px;
+      overflow-y:auto;
+      max-height: 432px;
+      scroll-behavior: smooth;
+    }
+
+    /* Date chip */
+    .wa-date{
+      align-self:center;
+      margin: 2px 0 8px;
+      padding: 5px 12px;
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing:.02em;
+      color: rgba(var(--ink2), .80);
+      background: rgba(255,255,255,.88);
+      border-radius: 999px;
+      box-shadow: 0 1px 2px rgba(18,12,28,.06);
+    }
+
+    .wa-msg{ display:flex; width:100% }
+    .wa-in{ justify-content:flex-start }
+    .wa-out{ justify-content:flex-end }
+
+    .wa-bubble{
+      position:relative;
+      max-width: 78%;
+      min-width: 92px;
+      padding: 6px 9px 6px;
+      border-radius: 12px;
+      font-size: 14.5px;
+      line-height: 1.4;
+      color:#2b1e3f;
+      background:#fff;
+      box-shadow: 0 1px 1.5px rgba(43,30,63,.10);
+    }
+    .wa-text{
+      display:block;
+      white-space: pre-wrap;        /* preserve user line breaks only */
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+    .wa-meta{
+      display:flex; align-items:center; justify-content:flex-end; gap:4px;
+      margin-top: 2px;
+      font-size: 11px;
+      line-height: 1;
+      color: rgba(var(--ink2), .50);
+      user-select:none;
+    }
+    .wa-in .wa-bubble{ border-top-left-radius: 4px; }
+    .wa-in .wa-bubble::before{
+      content:""; position:absolute; top:0; left:-7px;
+      border:6px solid transparent; border-top-color:#fff; border-right-color:#fff;
+    }
+    .wa-out .wa-bubble{ background:#efe4ff; border-top-right-radius:4px; }
+    .wa-out .wa-bubble::before{
+      content:""; position:absolute; top:0; right:-7px;
+      border:6px solid transparent; border-top-color:#efe4ff; border-left-color:#efe4ff;
+    }
+    .wa-ticks{ width:15px; height:11px; fill:#a855f7; flex:0 0 auto }
+
+    /* Composer */
+    .wa-composer{
+      display:flex; align-items:flex-end; gap:8px;
+      padding: 9px 10px;
+      background:#f4eefb;
+      border-top: 1px solid rgba(var(--ink), .06);
+      flex:0 0 auto;
+    }
+    .wa-input{
+      flex:1 1 auto;
+      width:100%;
+      min-height: 44px;
+      max-height: 150px;
+      padding: 11px 14px;
+      border-radius: 21px;
+      border: 1px solid rgba(var(--ink), .08);
+      background:#fff;
+      color:#2b1e3f;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      line-height:1.4;
+      resize:none;
+      outline:none;
+      box-shadow: 0 1px 2px rgba(18,12,28,.04);
+    }
+    .wa-input:focus{ border-color: rgba(124,58,237,.40); box-shadow:0 2px 12px rgba(124,58,237,.12) }
+    .wa-send{
+      flex:0 0 auto;
+      width:46px; height:46px;
+      border-radius:50%;
+      border:none; cursor:pointer;
+      background: linear-gradient(135deg,#7c3aed,#ec4899);
+      display:grid; place-items:center;
+      box-shadow: 0 8px 18px rgba(124,58,237,.30);
+      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+    }
+    .wa-send:hover{ filter:saturate(1.08) brightness(1.03); transform: translateY(-1px) scale(1.04) }
+    .wa-send:active{ transform: scale(.96) }
+    .wa-send svg{ width:22px; height:22px; fill:#fff }
+
+    .wa-pick-note{ margin-top: 10px; }
+
+    /* Location / map card */
+    .map-card{ display:flex; flex-direction:column; gap:12px; }
+    .map-card h3{ margin:0 }
+    .map-addr{ margin:0 !important; color:var(--muted); font-size:14px }
+    .map-hours{
+      display:flex; flex-wrap:wrap; gap:6px 16px;
+      font-size:12.5px; color:rgba(var(--ink2),.80);
+    }
+    .map-hours span{ display:inline-flex; align-items:center; gap:6px }
+    .map-hours span::before{
+      content:""; width:6px; height:6px; border-radius:50%;
+      background:linear-gradient(135deg,var(--violet),var(--pink));
+    }
+    .map-embed{
+      position:relative;
+      flex:1 1 auto;
+      min-height:240px;
+      border-radius:var(--r-card);
+      overflow:hidden;
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow2);
+    }
+    .map-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block }
+    .map-card .socials{ margin-top:2px }
+    @media (max-width: 980px){
+      .map-embed{ min-height: 260px }
+    }
+
+    @media (max-width:560px){
+      .wa-bubble{ max-width:86% }
+      .wa-chat{ min-height: 500px }
+    }
+
+
+    /* Footer */
+    footer{
+      padding: 20px 0 36px;
+      color: rgba(var(--ink2), .66);
+      font-size: 13px;
+    }
+    .footer-inner{
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      border-top: 1px solid rgba(var(--ink), .10);
+      padding-top: 14px;
+      align-items:center;
+    }
+    .footer-link{
+      background:none; border:none; cursor:pointer;
+      color: rgba(var(--ink2), .72); font: inherit; font-size:13px;
+      text-decoration: underline; text-underline-offset: 3px;
+      padding:0; transition: color .15s ease;
+    }
+    .footer-link:hover{ color: var(--violet) }
+
+    /* Language switch */
+    .lang-switch{
+      display:inline-flex; align-items:center;
+      border:1px solid var(--stroke); border-radius:999px;
+      background: rgba(255,255,255,.5); padding:3px; gap:2px;
+    }
+    .lang-btn{
+      border:none; background:transparent; cursor:pointer;
+      font: inherit; font-size:12.5px; font-weight:700; letter-spacing:.03em;
+      color: rgba(var(--ink2), .70);
+      padding:6px 10px; border-radius:999px; line-height:1;
+      transition: background .15s ease, color .15s ease;
+    }
+    .lang-btn:hover{ color: var(--text) }
+    .lang-btn.active{
+      color:#fff;
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      box-shadow: 0 4px 12px rgba(124,58,237,.28);
+    }
+
+    /* Modal (privacy policy) */
+    .modal{
+      position:fixed; inset:0; z-index:130;
+      display:none; align-items:center; justify-content:center; padding:20px;
+      background: rgba(20,12,28,.55);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .modal.open{ display:flex }
+    .modal-card{
+      position:relative;
+      width:min(720px, 96vw); max-height: 86vh; overflow:auto;
+      border-radius: var(--r-panel);
+      padding: 28px clamp(18px,4vw,34px);
+      background: var(--card);
+    }
+    .modal-close{
+      position:absolute; top:14px; right:16px;
+      width:38px; height:38px; border-radius:50%;
+      border:1px solid var(--stroke); background:rgba(255,255,255,.7);
+      cursor:pointer; font-size:22px; line-height:1; color: rgba(var(--ink2), .7);
+      display:grid; place-items:center; transition: background .15s ease;
+    }
+    .modal-close:hover{ background:#fff }
+    .modal-body{ color: var(--text) }
+    .modal-body h2{ font-family: var(--font-head); font-size: clamp(22px,4vw,28px); margin: 0 0 6px }
+    .modal-body .upd{ color: var(--muted); font-size:13px; margin-bottom:18px }
+    .modal-body h3{ font-size:16px; margin:18px 0 6px }
+    .modal-body p{ color: rgba(var(--ink2), .88); font-size:14.5px; line-height:1.6; margin:0 0 10px }
+    .modal-body ul{ margin:0 0 10px; padding-left:20px; color: rgba(var(--ink2), .88); font-size:14.5px; line-height:1.6 }
+    .modal-body a{ color: var(--violet) }
+    .modal-body .muted{ color: var(--muted); font-size:12.5px }
+
+
+    /* Subtle floating blobs (lighter + less intense) */
+    .blob{
+      position:absolute;
+      width: 340px; height: 340px;
+      border-radius: 999px;
+      filter: blur(64px);
+      opacity: .09;
+      pointer-events:none;
+      animation: float 14s ease-in-out infinite;
+      z-index:0;
+    }
+    .blob.b1{ left:-120px; top: 120px; background: rgba(124,58,237,.9) }
+    .blob.b2{ right:-140px; top: 260px; background: rgba(236,72,153,.85); animation-delay: -3s }
+    .blob.b3{ left: 20%; bottom: -180px; background: rgba(56,189,248,.75); animation-delay: -6s }
+    @keyframes float{
+      0%,100%{ transform: translate3d(0,0,0) }
+      50%{ transform: translate3d(0,-18px,0) }
+    }
+
+
+    /* Motion reduce */
+    @media (prefers-reduced-motion: reduce){
+      .lift, .chip, .btn, .cta, .bthumb { transition:none !important }
+      .blob{ animation:none !important }
+      .hero-slide{ transition:none !important }
+      .bouquet-img{ transition:none !important }
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+
+  <header class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a class="brand" href="#top" aria-label="Razalija">
+          <span class="brand-name">Razalija</span>
+          <span class="brand-address" data-i18n="nav_addr">Kokneses prospekts 18, Rīga</span>
+        </a>
+
+
+        <nav class="nav-links" aria-label="Navigācija">
+          <a class="chip nav-hide-mobile" href="#services" data-i18n="nav_services">Pakalpojumi</a>
+          <a class="chip nav-hide-mobile" href="#bouquets" data-i18n="nav_bouquets">Pušķi</a>
+          <a class="chip" href="#contact" data-i18n="nav_contacts">Kontakti</a>
+          <a class="cta" href="#contact" id="navOrderBtn" data-i18n="nav_order">Pasūtīt pušķi</a>
+          <div class="lang-switch" role="group" aria-label="Valoda / Язык">
+            <button type="button" class="lang-btn" data-lang="lv">LV</button>
+            <button type="button" class="lang-btn" data-lang="ru">RU</button>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="glass hero-wide lift" id="heroCard" aria-label="Hero bloks">
+          <div class="hero-slides" aria-hidden="true" id="heroSlides"></div>
+
+
+          <div class="hero-content">
+            <div class="kicker"><span class="dot" aria-hidden="true"></span> <span data-i18n="hero_kicker">Ziedi, kas izskatās kā svētki</span></div>
+            <h1 data-i18n="hero_h1">Razalija — svaigi, skaisti ziedi no Mežaparka</h1>
+            <p class="sub" data-i18n="hero_sub">
+              Izvēlies gatavu pušķi galerijā un aizpildi pieteikumu minūtes laikā. Mēs precizēsim detaļas un visu sakārtosim tā, lai izskatās perfekti.
+            </p>
+
+
+            <div class="hero-actions">
+              <a class="btn primary" href="#bouquets" data-i18n="hero_btn1">Izvēlēties pušķi</a>
+              <a class="btn" href="#contact" id="quickOrderBtn" data-i18n="hero_btn2">Atstāt pieteikumu</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2 data-i18n="services_h2">Pakalpojumi</h2>
+            <p data-i18n="services_sub">Trīs viegli ceļi līdz pušķim: ienāc, izvēlies gatavu vai pastāsti noskaņu — mēs pārējo izdarīsim ar gaumi.</p>
+          </div>
+        </div>
+
+
+        <div class="cards">
+          <article class="card lift">
+            <div class="icon" aria-hidden="true">🌸</div>
+            <h3 data-i18n="s1_title">Izvēlēties ziedus uz vietas</h3>
+            <div class="price" data-i18n="s1_price">no 5 € par ziedu</div>
+            <p class="desc" data-i18n="s1_desc">
+              Plaša ziedu un toņu izvēle. Pušķi varam sakārtot uzreiz uz vietas — no viegla minimālisma līdz bagātīgai kompozīcijai.
+            </p>
+            <div class="actions">
+              <a class="btn small primary" href="#bouquets" data-i18n="s1_btn">Apskatīt pušķus</a>
+            </div>
+          </article>
+
+
+          <article class="card lift">
+            <div class="icon" aria-hidden="true">🎁</div>
+            <h3 data-i18n="s2_title">Pušķis svētkiem</h3>
+            <div class="price" data-i18n="s2_price">ātri, skaisti, bez stresa</div>
+            <p class="desc" data-i18n="s2_desc">
+              Tu pasaki krāsas, noskaņu un kam tas ir domāts — mēs piedāvāsim variantus un sakārtosim gatavu pušķi.
+            </p>
+            <div class="actions">
+              <a class="btn small primary" href="#contact" data-service="Pušķis svētkiem" data-i18n="s2_btn">Pasūtīt pušķi</a>
+            </div>
+          </article>
+
+
+          <article class="card lift">
+            <div class="icon" aria-hidden="true">🏢</div>
+            <h3 data-i18n="s3_title">Korporatīvais piedāvājums</h3>
+            <div class="price" data-i18n="s3_price">pušķi birojam un pasākumiem</div>
+            <p class="desc" data-i18n="s3_desc">
+              Vienotā stilā svētkiem, kolēģiem vai pasākumiem. Pastāsti vajadzīgo daudzumu un noskaņu — sagatavosim piedāvājumu.
+            </p>
+            <div class="actions">
+              <a class="btn small primary" href="#contact" data-service="Korporatīvie pušķi" data-i18n="s3_btn">Pieprasīt piedāvājumu</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- BOUQUETS -->
+    <section id="bouquets">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2 data-i18n="bq_h2">Izvēlēties pušķi</h2>
+            <p data-i18n="bq_sub">Izvēlies pušķi galerijā — augšā parādīsies liels foto (klikšķini, lai apskatītu tuvāk), cena un sastāvs. Pievieno vienu vai vairākus pušķus pasūtījumam un nospied “Pasūtīt WhatsApp” — viss saraksts un kopsumma automātiski ievietosies ziņā.</p>
+          </div>
+        </div>
+
+
+        <div class="bouquets">
+          <!-- LEFT: square preview -->
+          <div class="glass bouquet-left lift">
+            <div class="bouquet-frame" aria-label="Pušķa priekšskatījums">
+              <div class="bouquet-img-wrap" id="bouquetImgWrap">
+                <!-- images injected by JS -->
+              </div>
+              <button class="zoom-btn" id="zoomBtn" type="button" data-i18n-aria="zoom" aria-label="Apskatīt lielāku">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14m.5-7H9v2H7v1h2v2h1v-2h2V9h-2z"/></svg>
+              </button>
+              <div class="bouquet-badge"><span id="bBadgeName">—</span><span class="price" id="bBadgePrice">€ —</span></div>
+            </div>
+          </div>
+
+
+          <!-- RIGHT: details + quantity + CTA -->
+          <div class="glass bouquet-right lift">
+            <div class="bouquet-info">
+              <div class="label" data-i18n="bq_chosen">Tu izvēlējies</div>
+              <div class="value" id="bSideTitle">—</div>
+              <div class="hint" id="bSideIncludes">—</div>
+            </div>
+
+            <div class="qty-row">
+              <span class="qty-label" data-i18n="bq_qty">Daudzums</span>
+              <div class="qty" role="group" aria-label="Daudzums">
+                <button class="qty-btn" id="qtyMinus" type="button" aria-label="−">−</button>
+                <span class="qty-num" id="qtyNum">1</span>
+                <button class="qty-btn" id="qtyPlus" type="button" aria-label="+">+</button>
+              </div>
+              <span class="qty-total" id="qtyTotal"><small>Kopā</small>€ —</span>
+            </div>
+
+            <div class="bouquet-order">
+              <button class="btn primary" id="addToCartBtn" type="button" data-i18n="bq_add">Pievienot pasūtījumam</button>
+            </div>
+
+            <div class="bouquet-info">
+              <div class="hint" data-i18n="bq_hint">Pievieno vienu vai vairākus pušķus pasūtījumam, tad nospied “Pasūtīt WhatsApp” — viss saraksts un kopsumma automātiski parādīsies ziņā.</div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Full-width square gallery -->
+        <div class="bouquet-gallery" id="bouquetThumbs" aria-label="Pušķu galerija">
+          <!-- thumbs injected by JS -->
+        </div>
+
+
+        <!-- Cart / order summary -->
+        <div class="glass cart lift" id="cart">
+          <div class="cart-head">
+            <h3 data-i18n="cart_title">Tavs pasūtījums</h3>
+            <span class="cart-count" id="cartCount">0</span>
+          </div>
+          <div class="cart-items" id="cartItems">
+            <div class="cart-empty" id="cartEmpty" data-i18n="cart_empty">Pagaidām tukšs — pievieno pušķi no galerijas augšā.</div>
+          </div>
+          <div class="cart-foot">
+            <div class="cart-total"><small data-i18n="total">Kopā</small><span id="cartTotal">€ 0</span></div>
+            <button class="btn primary" id="cartCheckout" type="button" data-i18n="cart_checkout" disabled>Pasūtīt WhatsApp</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2 data-i18n="ct_h2">Sazināties un pasūtīt</h2>
+            <p data-i18n="ct_sub">Saliec pasūtījumu galerijā augstāk — tā saturs un kopsumma automātiski parādīsies ziņā. Pārbaudi tekstu un nosūti to mums tieši WhatsApp.</p>
+          </div>
+        </div>
+
+
+        <div class="contact">
+          <div class="glass contact-info map-card lift">
+            <h3 data-i18n="ct_map_title">Kur mūs atrast</h3>
+            <p class="map-addr" data-i18n="ct_addr">Kokneses prospekts 18, Rīga, LV-1014 · Mežaparks</p>
+            <div class="map-hours">
+              <span data-i18n="hours1">P.–C. 8:00–19:30</span>
+              <span data-i18n="hours2">Pk. 8:00–20:00</span>
+              <span data-i18n="hours3">S. 9:00–18:00</span>
+              <span data-i18n="hours4">Sv. 10:00–17:00</span>
+            </div>
+
+            <div class="map-embed">
+              <iframe
+                title="Razalija karte"
+                src="https://www.google.com/maps?q=57.000786,24.1597953&z=16&output=embed"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen></iframe>
+            </div>
+
+            <div class="note wa-pick-note" id="selectedBouquetNote"></div>
+
+            <div class="socials" aria-label="Saites">
+              <a class="social" href="https://www.google.com/maps/search/?api=1&query=57.000786,24.1597953" target="_blank" rel="noopener" data-i18n="ct_openmap">Atvērt kartē</a>
+              <a class="social" id="waSocialLink" href="#" target="_blank" rel="noopener" title="WhatsApp">WhatsApp</a>
+            </div>
+          </div>
+
+
+          <!-- WhatsApp chat mock -->
+          <div class="glass wa-chat lift" id="waChat" aria-label="WhatsApp pasūtījuma logs">
+            <div class="wa-header">
+              <div class="wa-avatar" aria-hidden="true">R</div>
+              <div class="wa-peer">
+                <div class="wa-peer-name">Razalija</div>
+                <div class="wa-peer-status"><span class="wa-status-dot"></span> <span data-i18n="wa_online">tiešsaistē</span></div>
+              </div>
+              <div class="wa-head-icons" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+              </div>
+            </div>
+
+            <div class="wa-body" id="waBody">
+              <div class="wa-date" data-i18n="wa_today">Šodien</div>
+
+              <div class="wa-msg wa-in">
+                <div class="wa-bubble">
+                  <span class="wa-text" data-i18n="wa_greeting">Labdien! 🌸 Priecāsimies par tavu pasūtījumu. Izvēlies pušķi un nosūti ziņu — atbildēsim dažu minūšu laikā.</span>
+                  <span class="wa-meta"><span class="wa-time-now">9:41</span></span>
+                </div>
+              </div>
+
+              <div class="wa-msg wa-out">
+                <div class="wa-bubble">
+                  <span class="wa-text" id="waPreviewText" data-i18n="wa_preview_ph">Tava ziņa parādīsies šeit...</span>
+                  <span class="wa-meta">
+                    <span class="wa-time-now">9:41</span>
+                    <svg class="wa-ticks" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.07.65 5.3 8.2 2.9 5.86l-.9.9 3.4 3.3L12 1.5zM16.6.65l-5.77 7.55-.86-.84-.9.9 1.78 1.74L17.5 1.5z"/></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wa-composer">
+              <textarea id="waInput" class="wa-input" rows="1" data-i18n-ph="wa_input_ph" placeholder="Tava ziņa..."></textarea>
+              <button class="wa-send" id="waSend" type="button" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24"><path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <footer>
+          <div class="container">
+            <div class="footer-inner">
+              <div>© <span id="year"></span> Razalija</div>
+              <button type="button" class="footer-link" id="openPrivacy" data-i18n="footer_privacy">Privātuma politika</button>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+    <button class="lb-close" id="lbClose" type="button" aria-label="×">&times;</button>
+    <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="‹">&#8249;</button>
+    <figure class="lb-figure">
+      <img id="lbImg" src="" alt="" />
+      <figcaption class="lb-caption">
+        <span id="lbName">—</span>
+        <span class="lb-price" id="lbPrice">€ —</span>
+        <button class="btn primary lb-add" id="lbAdd" type="button" data-i18n="bq_add">Pievienot pasūtījumam</button>
+      </figcaption>
+    </figure>
+    <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="›">&#8250;</button>
+  </div>
+
+
+  <!-- Privacy policy modal -->
+  <div class="modal" id="privacyModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+    <div class="modal-card glass">
+      <button class="modal-close" id="privacyClose" type="button" aria-label="×">&times;</button>
+      <div class="modal-body" id="privacyBody"><!-- filled by JS per language --></div>
+    </div>
+  </div>
+
+
+  <script>
+    // -------- Smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href');
+        if (!href || href === '#') return;
+        const el = document.querySelector(href);
+        if (!el) return;
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+
+    // ===== i18n dictionary (LV / RU) =====
+    let lang = 'lv';
+    try { const s = localStorage.getItem('raz_lang'); if (s === 'ru' || s === 'lv') lang = s; } catch(e){}
+
+    const I18N = {
+      lv: {
+        nav_addr:"Kokneses prospekts 18, Rīga",
+        nav_services:"Pakalpojumi", nav_bouquets:"Pušķi", nav_contacts:"Kontakti", nav_order:"Pasūtīt pušķi",
+        hero_kicker:"Ziedi, kas izskatās kā svētki",
+        hero_h1:"Razalija — svaigi, skaisti ziedi no Mežaparka",
+        hero_sub:"Izvēlies gatavu pušķi galerijā un aizpildi pieteikumu minūtes laikā. Mēs precizēsim detaļas un visu sakārtosim tā, lai izskatās perfekti.",
+        hero_btn1:"Izvēlēties pušķi", hero_btn2:"Atstāt pieteikumu",
+        services_h2:"Pakalpojumi",
+        services_sub:"Trīs viegli ceļi līdz pušķim: ienāc, izvēlies gatavu vai pastāsti noskaņu — mēs pārējo izdarīsim ar gaumi.",
+        s1_title:"Izvēlēties ziedus uz vietas", s1_price:"no 5 € par ziedu",
+        s1_desc:"Plaša ziedu un toņu izvēle. Pušķi varam sakārtot uzreiz uz vietas — no viegla minimālisma līdz bagātīgai kompozīcijai.", s1_btn:"Apskatīt pušķus",
+        s2_title:"Pušķis svētkiem", s2_price:"ātri, skaisti, bez stresa",
+        s2_desc:"Tu pasaki krāsas, noskaņu un kam tas ir domāts — mēs piedāvāsim variantus un sakārtosim gatavu pušķi.", s2_btn:"Pasūtīt pušķi",
+        s3_title:"Korporatīvais piedāvājums", s3_price:"pušķi birojam un pasākumiem",
+        s3_desc:"Vienotā stilā svētkiem, kolēģiem vai pasākumiem. Pastāsti vajadzīgo daudzumu un noskaņu — sagatavosim piedāvājumu.", s3_btn:"Pieprasīt piedāvājumu",
+        bq_h2:"Izvēlēties pušķi",
+        bq_sub:"Izvēlies pušķi galerijā — augšā parādīsies liels foto (klikšķini, lai apskatītu tuvāk), cena un sastāvs. Pievieno vienu vai vairākus pušķus pasūtījumam un nospied “Pasūtīt WhatsApp” — viss saraksts un kopsumma automātiski ievietosies ziņā.",
+        bq_chosen:"Tu izvēlējies", bq_qty:"Daudzums", bq_add:"Pievienot pasūtījumam",
+        bq_hint:"Pievieno vienu vai vairākus pušķus pasūtījumam, tad nospied “Pasūtīt WhatsApp” — viss saraksts un kopsumma automātiski parādīsies ziņā.",
+        zoom:"Apskatīt lielāku", total:"Kopā",
+        cart_title:"Tavs pasūtījums", cart_empty:"Pagaidām tukšs — pievieno pušķi no galerijas augšā.",
+        cart_checkout:"Pasūtīt WhatsApp", pcs:"gab.", per_unit:"/ gab.", in_order:"Pasūtījumā:", added:"✓ Pievienots",
+        ct_h2:"Sazināties un pasūtīt",
+        ct_sub:"Saliec pasūtījumu galerijā augstāk — tā saturs un kopsumma automātiski parādīsies ziņā. Pārbaudi tekstu un nosūti to mums tieši WhatsApp.",
+        ct_map_title:"Kur mūs atrast", ct_addr:"Kokneses prospekts 18, Rīga, LV-1014 · Mežaparks",
+        hours1:"P.–C. 8:00–19:30", hours2:"Pk. 8:00–20:00", hours3:"S. 9:00–18:00", hours4:"Sv. 10:00–17:00",
+        ct_openmap:"Atvērt kartē",
+        wa_online:"tiešsaistē", wa_today:"Šodien",
+        wa_greeting:"Labdien! 🌸 Priecāsimies par tavu pasūtījumu. Izvēlies pušķi un nosūti ziņu — atbildēsim dažu minūšu laikā.",
+        wa_preview_ph:"Tava ziņa parādīsies šeit...", wa_input_ph:"Tava ziņa...",
+        footer_privacy:"Privātuma politika",
+        draft_intro:"Labdien! Vēlos pasūtīt:", draft_total:"Kopā: €",
+        draft_outro:"Lūdzu, pasakiet, vai tas ir pieejams un uz kuru laiku to var sagatavot.",
+        draft_default:"Labdien! Vēlos pasūtīt ziedus. ",
+        draft_service:"Labdien! Mani interesē pakalpojums “{s}”.\nLūdzu, pastāstiet vairāk par iespējām un cenu.",
+        privacy_html:
+          "<h2>Privātuma politika</h2>"+
+          "<div class='upd'>Pēdējoreiz atjaunināts: 2026</div>"+
+          "<p>Šī privātuma politika apraksta, kā Razalija (ziedu salons) apstrādā personas datus saistībā ar šo vietni un pasūtījumiem.</p>"+
+          "<h3>1. Pārzinis</h3>"+
+          "<p>Razalija, Kokneses prospekts 18, Rīga, LV-1014. Tālrunis / WhatsApp: +371 26 068 971. Reģ. Nr.: <span class='muted'>[norādiet]</span>. E-pasts: <span class='muted'>[norādiet]</span>.</p>"+
+          "<h3>2. Kādus datus apstrādājam</h3>"+
+          "<p>Vietne pati nesaglabā datus serverī. Kad tu sazinies ar mums, izmantojot WhatsApp, mēs saņemam tavu vārdu vai profila informāciju, tālruņa numuru, ziņas saturu un pasūtījuma detaļas (izvēlētie pušķi, daudzums).</p>"+
+          "<h3>3. Mērķi un tiesiskais pamats</h3>"+
+          "<p>Datus izmantojam, lai sazinātos, sagatavotu un izpildītu pasūtījumu (līguma izpilde, VDAR 6.(1)(b)) un atbildētu uz jautājumiem (leģitīmas intereses, VDAR 6.(1)(f)).</p>"+
+          "<h3>4. WhatsApp</h3>"+
+          "<p>Saziņa notiek caur WhatsApp (Meta Platforms Ireland Ltd.). Uz šo saraksti attiecas arī WhatsApp privātuma politika.</p>"+
+          "<h3>5. Trešo pušu pakalpojumi vietnē</h3>"+
+          "<p>Vietnē ir iegults Google Maps karte (Google var apstrādāt tavu IP adresi un izmantot sīkdatnes) un attēli tiek piegādāti caur ImageKit. Pati vietne neizmanto mārketinga sīkdatnes.</p>"+
+          "<h3>6. Datu glabāšana</h3>"+
+          "<p>Datus glabājam tik ilgi, cik nepieciešams pasūtījuma izpildei un normatīvo aktu prasībām.</p>"+
+          "<h3>7. Tavas tiesības</h3>"+
+          "<p>Tev ir tiesības piekļūt saviem datiem, labot tos, dzēst, ierobežot apstrādi, iebilst un uz datu pārnesamību. Sūdzību vari iesniegt Datu valsts inspekcijai (Latvija).</p>"+
+          "<h3>8. Kontakti</h3>"+
+          "<p>Jautājumos par datu apstrādi raksti uz WhatsApp +371 26 068 971 vai e-pastu <span class='muted'>[norādiet]</span>.</p>"+
+          "<p class='muted'>Šis ir paraugs. Pirms publicēšanas lūdzam pārbaudīt un pielāgot uzņēmuma juridiskos datus.</p>"
+      },
+      ru: {
+        nav_addr:"Кокнесес проспект 18, Рига",
+        nav_services:"Услуги", nav_bouquets:"Букеты", nav_contacts:"Контакты", nav_order:"Заказать букет",
+        hero_kicker:"Цветы, которые выглядят как праздник",
+        hero_h1:"Razalija — свежие, красивые цветы из Межапаркса",
+        hero_sub:"Выберите готовый букет в галерее и оформите заявку за минуту. Мы уточним детали и всё сделаем так, чтобы выглядело идеально.",
+        hero_btn1:"Выбрать букет", hero_btn2:"Оставить заявку",
+        services_h2:"Услуги",
+        services_sub:"Три простых пути к букету: зайдите, выберите готовый или расскажите настроение — остальное мы сделаем со вкусом.",
+        s1_title:"Выбрать цветы на месте", s1_price:"от 5 € за цветок",
+        s1_desc:"Большой выбор цветов и оттенков. Соберём букет сразу на месте — от лёгкого минимализма до пышной композиции.", s1_btn:"Смотреть букеты",
+        s2_title:"Букет к празднику", s2_price:"быстро, красиво, без стресса",
+        s2_desc:"Вы называете цвета, настроение и повод — мы предложим варианты и соберём готовый букет.", s2_btn:"Заказать букет",
+        s3_title:"Корпоративное предложение", s3_price:"букеты для офиса и мероприятий",
+        s3_desc:"В едином стиле для праздников, коллег или мероприятий. Расскажите нужное количество и настроение — подготовим предложение.", s3_btn:"Запросить предложение",
+        bq_h2:"Выбрать букет",
+        bq_sub:"Выберите букет в галерее — сверху появится большое фото (нажмите, чтобы рассмотреть), цена и состав. Добавьте один или несколько букетов в заказ и нажмите «Заказать в WhatsApp» — весь список и итоговая сумма автоматически попадут в сообщение.",
+        bq_chosen:"Вы выбрали", bq_qty:"Количество", bq_add:"Добавить в заказ",
+        bq_hint:"Добавьте один или несколько букетов в заказ, затем нажмите «Заказать в WhatsApp» — весь список и сумма автоматически появятся в сообщении.",
+        zoom:"Посмотреть крупнее", total:"Итого",
+        cart_title:"Ваш заказ", cart_empty:"Пока пусто — добавьте букеты из галереи выше.",
+        cart_checkout:"Заказать в WhatsApp", pcs:"шт.", per_unit:"/ шт.", in_order:"В заказе:", added:"✓ Добавлено",
+        ct_h2:"Связаться и заказать",
+        ct_sub:"Соберите заказ в галерее выше — его состав и сумма автоматически появятся в сообщении. Проверьте текст и отправьте его нам прямо в WhatsApp.",
+        ct_map_title:"Где нас найти", ct_addr:"Кокнесес проспект 18, Рига, LV-1014 · Межапаркс",
+        hours1:"Пн–Чт 8:00–19:30", hours2:"Пт 8:00–20:00", hours3:"Сб 9:00–18:00", hours4:"Вс 10:00–17:00",
+        ct_openmap:"Открыть на карте",
+        wa_online:"в сети", wa_today:"Сегодня",
+        wa_greeting:"Здравствуйте! 🌸 Будем рады вашему заказу. Выберите букет и отправьте сообщение — ответим в течение нескольких минут.",
+        wa_preview_ph:"Ваше сообщение появится здесь...", wa_input_ph:"Ваше сообщение...",
+        footer_privacy:"Политика конфиденциальности",
+        draft_intro:"Здравствуйте! Хочу заказать:", draft_total:"Итого: €",
+        draft_outro:"Подскажите, пожалуйста, доступно ли это и на какое время можно подготовить.",
+        draft_default:"Здравствуйте! Хочу заказать цветы. ",
+        draft_service:"Здравствуйте! Меня интересует услуга «{s}».\nРасскажите, пожалуйста, подробнее о вариантах и цене.",
+        privacy_html:
+          "<h2>Политика конфиденциальности</h2>"+
+          "<div class='upd'>Последнее обновление: 2026</div>"+
+          "<p>Эта политика описывает, как Razalija (цветочный салон) обрабатывает персональные данные в связи с этим сайтом и заказами.</p>"+
+          "<h3>1. Оператор данных</h3>"+
+          "<p>Razalija, Кокнесес проспект 18, Рига, LV-1014. Телефон / WhatsApp: +371 26 068 971. Рег. номер: <span class='muted'>[укажите]</span>. E-mail: <span class='muted'>[укажите]</span>.</p>"+
+          "<h3>2. Какие данные мы обрабатываем</h3>"+
+          "<p>Сам сайт не хранит данные на сервере. Когда вы связываетесь с нами через WhatsApp, мы получаем ваше имя или данные профиля, номер телефона, содержание сообщения и детали заказа (выбранные букеты, количество).</p>"+
+          "<h3>3. Цели и правовое основание</h3>"+
+          "<p>Данные используются для связи, подготовки и выполнения заказа (исполнение договора, GDPR 6(1)(b)) и для ответов на вопросы (законный интерес, GDPR 6(1)(f)).</p>"+
+          "<h3>4. WhatsApp</h3>"+
+          "<p>Общение происходит через WhatsApp (Meta Platforms Ireland Ltd.). К этой переписке также применяется политика конфиденциальности WhatsApp.</p>"+
+          "<h3>5. Сторонние сервисы на сайте</h3>"+
+          "<p>На сайте встроена карта Google Maps (Google может обрабатывать ваш IP-адрес и использовать файлы cookie), а изображения доставляются через ImageKit. Сам сайт не использует маркетинговые cookie.</p>"+
+          "<h3>6. Хранение данных</h3>"+
+          "<p>Мы храним данные столько, сколько необходимо для выполнения заказа и требований законодательства.</p>"+
+          "<h3>7. Ваши права</h3>"+
+          "<p>Вы имеете право на доступ к своим данным, их исправление, удаление, ограничение обработки, возражение и переносимость данных. Жалобу можно подать в Инспекцию данных (Латвия, Datu valsts inspekcija).</p>"+
+          "<h3>8. Контакты</h3>"+
+          "<p>По вопросам обработки данных пишите в WhatsApp +371 26 068 971 или на e-mail <span class='muted'>[укажите]</span>.</p>"+
+          "<p class='muted'>Это образец. Перед публикацией проверьте и адаптируйте юридические данные компании.</p>"
+      }
+    };
+
+    function t(key){
+      return (I18N[lang] && I18N[lang][key] !== undefined) ? I18N[lang][key]
+           : (I18N.lv[key] !== undefined ? I18N.lv[key] : key);
+    }
+
+    const SERVICE_I18N = {
+      "Pušķis svētkiem": { lv:"Pušķis svētkiem", ru:"Букет к празднику" },
+      "Korporatīvie pušķi": { lv:"Korporatīvie pušķi", ru:"Корпоративные букеты" }
+    };
+    function serviceLabel(s){ return SERVICE_I18N[s] ? SERVICE_I18N[s][lang] : s; }
+
+
+    // -------- Image optimization helper (Cloudinary + ImageKit: auto format/quality + width)
+    function opt(url, w){
+      if (typeof url !== 'string') return url;
+      // Cloudinary
+      if (url.includes('res.cloudinary.com') && url.includes('/upload/')){
+        if (/\/upload\/(f_auto|q_auto|w_)/.test(url)) return url;
+        return url.replace('/upload/', `/upload/f_auto,q_auto,w_${w}/`);
+      }
+      // ImageKit
+      if (url.includes('ik.imagekit.io')){
+        if (url.includes('tr=')) return url;
+        return url + (url.includes('?') ? '&' : '?') + `tr=w-${w}`;
+      }
+      return url;
+    }
+
+
+    // -------- HERO: crossfade slideshow (your links)
+    const heroImages = [
+      "https://ik.imagekit.io/coworker/Razalija/raz%201.png",
+      "https://ik.imagekit.io/coworker/Razalija/raz%202.png",
+      "https://ik.imagekit.io/coworker/Razalija/raz%203.png",
+      "https://ik.imagekit.io/coworker/Razalija/raz%204.png",
+      "https://ik.imagekit.io/coworker/Razalija/raz%205.png",
+      "https://ik.imagekit.io/coworker/Razalija/raz%206.png"
+    ];
+
+
+    const heroSlides = document.getElementById('heroSlides');
+    const slideA = document.createElement('div');
+    const slideB = document.createElement('div');
+    slideA.className = 'hero-slide active';
+    slideB.className = 'hero-slide';
+    heroSlides.appendChild(slideA);
+    heroSlides.appendChild(slideB);
+
+
+    let heroIndex = 0;
+    let heroOnA = true;
+
+
+    function setSlide(el, url){ el.style.backgroundImage = `url("${opt(url, 1600)}")`; }
+
+
+    setSlide(slideA, heroImages[0]);
+    setSlide(slideB, heroImages[1 % heroImages.length]);
+
+
+    setInterval(() => {
+      heroIndex = (heroIndex + 1) % heroImages.length;
+      const nextUrl = heroImages[heroIndex];
+
+
+      if (heroOnA){
+        setSlide(slideB, nextUrl);
+        slideB.classList.add('active');
+        slideA.classList.remove('active');
+      } else {
+        setSlide(slideA, nextUrl);
+        slideA.classList.add('active');
+        slideB.classList.remove('active');
+      }
+      heroOnA = !heroOnA;
+    }, 5200);
+
+
+    // -------- Bouquets data
+    const bouquets = [
+      { id:"p1",  name:"Peonija — sezonāli ziedi (maijs–jūlijs)", price:250, includes:"Sezonāli ziedi, maijs–jūlijs · 50 gab.", url:"https://ik.imagekit.io/coworker/Razalija/products/1.png" },
+      { id:"p2",  name:"Kompozīcija Nr.1",  price:45,  includes:"Kompozīcija kastē.", url:"https://ik.imagekit.io/coworker/Razalija/products/2.png" },
+      { id:"p3",  name:"Ziedu pušķis Nr.2", price:50,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/3.png" },
+      { id:"p4",  name:"Ziedu pušķis Nr.3", price:70,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/4.png" },
+      { id:"p5",  name:"Ziedu pušķis Nr.4", price:38,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/5.png" },
+      { id:"p6",  name:"Ziedu pušķis Nr.5", price:80,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/6.png" },
+      { id:"p7",  name:"Ziedu pušķis Nr.6", price:40,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/7.png" },
+      { id:"p8",  name:"Ziedu pušķis Nr.7", price:55,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/10.png" },
+      { id:"p9",  name:"Ziedu pušķis Nr.8", price:55,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/8.png" },
+      { id:"p10", name:"Ziedu pušķis Nr.9", price:55,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/9.png" },
+      { id:"p11", name:"Ziedu pušķis Nr.10", price:100, includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/11.png" }
+    ];
+
+
+    // -------- Bouquets UI wiring
+    const imgWrap = document.getElementById('bouquetImgWrap');
+    const thumbsWrap = document.getElementById('bouquetThumbs');
+
+
+    const bSideTitle = document.getElementById('bSideTitle');
+    const bSideIncludes = document.getElementById('bSideIncludes');
+    const bBadgeName = document.getElementById('bBadgeName');
+    const bBadgePrice = document.getElementById('bBadgePrice');
+
+    const qtyNum = document.getElementById('qtyNum');
+    const qtyMinus = document.getElementById('qtyMinus');
+    const qtyPlus = document.getElementById('qtyPlus');
+    const qtyTotal = document.getElementById('qtyTotal');
+
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const selectedBouquetNote = document.getElementById('selectedBouquetNote');
+
+    // Cart elements
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartEmptyEl = document.getElementById('cartEmpty');
+    const cartCountEl = document.getElementById('cartCount');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const cartCheckout = document.getElementById('cartCheckout');
+
+    // Lightbox elements
+    const zoomBtn = document.getElementById('zoomBtn');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbName = document.getElementById('lbName');
+    const lbPrice = document.getElementById('lbPrice');
+    const lbAdd = document.getElementById('lbAdd');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+
+
+    let selectedBouquet = bouquets[0];
+    let selectedIndex = 0;
+    let qty = 1;
+    let cart = [];   // [{ id, name, price, qty, url }]
+
+
+    // create big images (stacked for fade)
+    const bigImgs = bouquets.map((b, idx) => {
+      const img = document.createElement('img');
+      img.className = 'bouquet-img' + (idx === 0 ? ' active' : '');
+      img.src = opt(b.url, 1000);
+      img.alt = b.name;
+      img.loading = "lazy";
+      imgWrap.appendChild(img);
+      return img;
+    });
+
+
+    // create thumbs
+    const thumbEls = bouquets.map((b, idx) => {
+      const t = document.createElement('div');
+      t.className = 'bthumb' + (idx === 0 ? ' active' : '');
+      t.dataset.pick = String(idx);
+
+
+      const img = document.createElement('img');
+      img.src = opt(b.url, 480);
+      img.alt = b.name;
+      img.loading = "lazy";
+
+
+      const tag = document.createElement('div');
+      tag.className = 'tag';
+      tag.textContent = b.name;
+
+
+      const price = document.createElement('div');
+      price.className = 'priceTag';
+      price.textContent = `€ ${b.price}`;
+
+      const check = document.createElement('div');
+      check.className = 'check';
+      check.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>';
+
+
+      t.appendChild(img);
+      t.appendChild(tag);
+      t.appendChild(price);
+      t.appendChild(check);
+
+
+      t.addEventListener('click', () => activateBouquet(idx));
+      thumbsWrap.appendChild(t);
+      return t;
+    });
+
+
+    function updateTotal(){
+      const b = selectedBouquet || bouquets[0];
+      qtyNum.textContent = String(qty);
+      qtyTotal.innerHTML = `<small>${t('total')}</small>€ ${b.price * qty}`;
+    }
+
+    function activateBouquet(i){
+      const b = bouquets[i] || bouquets[0];
+
+      bigImgs.forEach((el, idx) => el.classList.toggle('active', idx === i));
+      thumbEls.forEach((el, idx) => el.classList.toggle('active', idx === i));
+
+      bSideTitle.textContent = `${b.name} · € ${b.price}`;
+      bSideIncludes.textContent = b.includes;
+      bBadgeName.textContent = b.name;
+      bBadgePrice.textContent = `€ ${b.price}`;
+
+      selectedBouquet = b;
+      selectedIndex = i;
+      qty = 1;                 // reset quantity on bouquet change
+      updateTotal();
+    }
+
+    qtyMinus.addEventListener('click', () => { qty = Math.max(1, qty - 1); updateTotal(); });
+    qtyPlus.addEventListener('click', () => { qty = Math.min(99, qty + 1); updateTotal(); });
+
+    activateBouquet(0);
+
+
+    // -------- WhatsApp order draft uses the already-declared selectedBouquetNote
+
+
+    // ===== WhatsApp order chat =====
+    // ⚠️ ВПИШИТЕ СЮДА РЕАЛЬНЫЙ НОМЕР WhatsApp.
+    // Формат: только цифры, с кодом страны, БЕЗ "+", пробелов и дефисов.
+    // Пример для Латвии: 37120000000
+    // ⚠️ ПРОВЕРЬТЕ номер: это публичный номер салона. Если заявки в WhatsApp
+    // приходят на другой номер — замените. Формат: цифры, код страны, без "+".
+    const WHATSAPP_NUMBER = "37126068971";
+
+    const waInput   = document.getElementById('waInput');
+    const waPreview = document.getElementById('waPreviewText');
+    const waSend    = document.getElementById('waSend');
+    const waBody    = document.getElementById('waBody');
+    const waSocialLink = document.getElementById('waSocialLink');
+
+    // Make the WhatsApp social link point to the chat too
+    if (waSocialLink) waSocialLink.href = `https://wa.me/${WHATSAPP_NUMBER}`;
+
+    // Current time in the chat bubbles
+    (function setWaTime(){
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      document.querySelectorAll('.wa-time-now').forEach(el => el.textContent = `${hh}:${mm}`);
+    })();
+
+    function buildBouquetDraft(b, n){
+      n = n || 1;
+      const total = b.price * n;
+      let lines = `Labdien! Vēlos pasūtīt pušķi “${b.name}”.\n`;
+      if (n > 1){
+        lines += `Daudzums: ${n} gab. · Cena: € ${b.price}/gab. · Kopā: € ${total}\n`;
+      } else {
+        lines += `Cena: € ${b.price}\n`;
+      }
+      lines += `Lūdzu, pasakiet, vai tas ir pieejams un uz kuru laiku to var sagatavot.`;
+      return lines;
+    }
+
+    function buildServiceDraft(serviceName){
+      return t('draft_service').replace('{s}', serviceLabel(serviceName));
+    }
+
+    function autoGrow(){
+      waInput.style.height = 'auto';
+      waInput.style.height = Math.min(waInput.scrollHeight, 150) + 'px';
+    }
+
+    let draftAuto = true;   // true = draft was auto-generated (can be re-localized)
+
+    function syncPreview(){
+      const val = waInput.value.trim();
+      waPreview.textContent = val.length ? val : t('wa_preview_ph');
+      if (waBody) waBody.scrollTop = waBody.scrollHeight;
+    }
+
+    function setDraft(text){
+      waInput.value = text;
+      draftAuto = true;
+      syncPreview();
+      autoGrow();
+    }
+
+    function refreshAutoDraft(){
+      if (!draftAuto){ syncPreview(); return; }
+      if (cart.length) setDraft(buildCartDraft());
+      else setDraft(t('draft_default'));
+    }
+
+    waInput.addEventListener('input', () => { draftAuto = false; syncPreview(); autoGrow(); });
+
+    function openWhatsApp(){
+      const text = waInput.value.trim();
+      if (!text){ waInput.focus(); return; }
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank', 'noopener');
+    }
+
+    waSend.addEventListener('click', openWhatsApp);
+    waInput.addEventListener('keydown', (e) => {
+      // Ctrl/Cmd + Enter -> отправить
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+        e.preventDefault();
+        openWhatsApp();
+      }
+    });
+
+    // ===== Cart logic =====
+    function cartCount(){ return cart.reduce((n,it)=>n+it.qty,0); }
+    function cartSum(){ return cart.reduce((s,it)=>s+it.price*it.qty,0); }
+
+    function renderCart(){
+      const count = cartCount();
+      const sum = cartSum();
+      cartItemsEl.querySelectorAll('.cart-item').forEach(n => n.remove());
+
+      if (cart.length === 0){
+        cartEmptyEl.style.display = '';
+      } else {
+        cartEmptyEl.style.display = 'none';
+        cart.forEach(it => {
+          const row = document.createElement('div');
+          row.className = 'cart-item';
+          row.innerHTML =
+            `<img class="cart-thumb" src="${opt(it.url,160)}" alt="${it.name}" loading="lazy">` +
+            `<div class="cart-meta"><div class="cart-name">${it.name}</div>` +
+            `<div class="cart-unit">€ ${it.price} ${t('per_unit')}</div></div>` +
+            `<div class="cart-qty"><button type="button" data-act="dec" aria-label="−">−</button>` +
+            `<span>${it.qty}</span>` +
+            `<button type="button" data-act="inc" aria-label="+">+</button></div>` +
+            `<div class="cart-line">€ ${it.price * it.qty}</div>` +
+            `<button class="cart-remove" type="button" data-act="rm" aria-label="×">&times;</button>`;
+          row.querySelector('[data-act="dec"]').addEventListener('click', () => changeQty(it.id, -1));
+          row.querySelector('[data-act="inc"]').addEventListener('click', () => changeQty(it.id, 1));
+          row.querySelector('[data-act="rm"]').addEventListener('click', () => removeItem(it.id));
+          cartItemsEl.appendChild(row);
+        });
+      }
+
+      cartCountEl.textContent = `${count} ${t('pcs')}`;
+      cartTotalEl.textContent = `€ ${sum}`;
+      cartCheckout.disabled = cart.length === 0;
+
+      if (selectedBouquetNote){
+        selectedBouquetNote.textContent = cart.length
+          ? `${t('in_order')} ${count} ${t('pcs')} · € ${sum}`
+          : '';
+      }
+    }
+
+    function addToCart(b, n){
+      n = n || 1;
+      const ex = cart.find(it => it.id === b.id);
+      if (ex) ex.qty = Math.min(99, ex.qty + n);
+      else cart.push({ id:b.id, name:b.name, price:b.price, qty:n, url:b.url });
+      renderCart();
+    }
+    function changeQty(id, d){
+      const it = cart.find(x => x.id === id); if (!it) return;
+      it.qty += d;
+      if (it.qty <= 0) cart = cart.filter(x => x.id !== id);
+      renderCart();
+    }
+    function removeItem(id){ cart = cart.filter(x => x.id !== id); renderCart(); }
+
+    function flashBtn(btn, txt){
+      const old = btn.textContent;
+      btn.textContent = txt;
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = old; btn.disabled = false; }, 1100);
+    }
+
+    addToCartBtn.addEventListener('click', () => {
+      addToCart(selectedBouquet || bouquets[0], qty);
+      flashBtn(addToCartBtn, t('added'));
+    });
+
+    function buildCartDraft(){
+      if (!cart.length) return '';
+      let msg = t('draft_intro') + '\n';
+      cart.forEach((it, i) => {
+        msg += `${i + 1}. ${it.name}`;
+        msg += it.qty > 1 ? ` × ${it.qty} — € ${it.price * it.qty}\n` : ` — € ${it.price}\n`;
+      });
+      msg += `${t('draft_total')} ${cartSum()}\n`;
+      msg += t('draft_outro');
+      return msg;
+    }
+
+    cartCheckout.addEventListener('click', () => {
+      if (!cart.length) return;
+      setDraft(buildCartDraft());
+      const c = document.getElementById('contact');
+      if (c) c.scrollIntoView({ behavior:'smooth', block:'start' });
+      setTimeout(() => waInput.focus({ preventScroll: true }), 600);
+    });
+
+    // ===== Lightbox =====
+    let lbIndex = 0;
+    function lbShow(i){
+      lbIndex = (i + bouquets.length) % bouquets.length;
+      const b = bouquets[lbIndex];
+      lbImg.src = opt(b.url, 1200);
+      lbImg.alt = b.name;
+      lbName.textContent = b.name;
+      lbPrice.textContent = `€ ${b.price}`;
+    }
+    function openLightbox(i){
+      lbShow(i);
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    zoomBtn.addEventListener('click', () => openLightbox(selectedIndex));
+    imgWrap.addEventListener('click', () => openLightbox(selectedIndex));
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', () => lbShow(lbIndex - 1));
+    lbNext.addEventListener('click', () => lbShow(lbIndex + 1));
+    lbAdd.addEventListener('click', () => { addToCart(bouquets[lbIndex], 1); flashBtn(lbAdd, t('added')); });
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') lbShow(lbIndex - 1);
+      else if (e.key === 'ArrowRight') lbShow(lbIndex + 1);
+    });
+
+    renderCart();
+
+    // Service cards (Pušķis svētkiem / Korporatīvie pušķi ...)
+    document.querySelectorAll('[data-service]').forEach(el => {
+      el.addEventListener('click', () => {
+        const s = el.getAttribute('data-service');
+        if (!s) return;
+        setTimeout(() => {
+          setDraft(buildServiceDraft(s));
+          if (selectedBouquetNote) selectedBouquetNote.textContent = `${t('in_order')} ${serviceLabel(s)}`;
+        }, 250);
+      });
+    });
+
+    // Optional prefill via query param ?service=...
+    const params = new URLSearchParams(location.search);
+    const qService = params.get('service');
+    if (qService){
+      setDraft(buildServiceDraft(qService.replace(/\+/g, ' ')));
+    } else {
+      setDraft(t('draft_default'));
+    }
+
+
+    // ===== Language switch + apply translations =====
+    function applyI18n(){
+      document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.getAttribute('data-i18n')); });
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))); });
+      document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      const pb = document.getElementById('privacyBody');
+      if (pb) pb.innerHTML = t('privacy_html');
+      updateTotal();
+      renderCart();
+      refreshAutoDraft();
+    }
+    function setLang(l){
+      lang = (l === 'ru') ? 'ru' : 'lv';
+      try { localStorage.setItem('raz_lang', lang); } catch(e){}
+      applyI18n();
+    }
+    document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+
+    // ===== Privacy modal =====
+    const privacyModal = document.getElementById('privacyModal');
+    const openPrivacyBtn = document.getElementById('openPrivacy');
+    const privacyCloseBtn = document.getElementById('privacyClose');
+    function openPrivacy(){ privacyModal.classList.add('open'); privacyModal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function closePrivacy(){ privacyModal.classList.remove('open'); privacyModal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    if (openPrivacyBtn) openPrivacyBtn.addEventListener('click', openPrivacy);
+    if (privacyCloseBtn) privacyCloseBtn.addEventListener('click', closePrivacy);
+    privacyModal.addEventListener('click', (e) => { if (e.target === privacyModal) closePrivacy(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && privacyModal.classList.contains('open')) closePrivacy(); });
+
+    // Apply selected language on load
+    applyI18n();
+
+
+    // -------- Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
