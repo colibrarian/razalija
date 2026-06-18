@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="lv">
 <head>
   <meta charset="utf-8" />
@@ -702,6 +702,7 @@
     }
     @media (max-width: 980px){
       .contact{ grid-template-columns: 1fr; }
+      .contact .wa-chat{ order: -1; }   /* chat first on mobile */
     }
     .contact-info{ padding: 18px }
     .contact-info h3{ margin: 0 0 8px; font-size: 20px; color: var(--text) }
@@ -1020,16 +1021,16 @@
     .modal-body .muted{ color: var(--muted); font-size:12.5px }
 
 
-    /* Subtle floating blobs (lighter + less intense) */
+    /* Subtle floating blobs (fixed so they never cause horizontal overflow) */
     .blob{
-      position:absolute;
+      position:fixed;
       width: 340px; height: 340px;
       border-radius: 999px;
       filter: blur(64px);
       opacity: .09;
       pointer-events:none;
       animation: float 14s ease-in-out infinite;
-      z-index:0;
+      z-index:-1;
     }
     .blob.b1{ left:-120px; top: 120px; background: rgba(124,58,237,.9) }
     .blob.b2{ right:-140px; top: 260px; background: rgba(236,72,153,.85); animation-delay: -3s }
@@ -1442,7 +1443,7 @@
         nav_addr:"Кокнесес проспект 18, Рига",
         nav_services:"Услуги", nav_bouquets:"Букеты", nav_contacts:"Контакты", nav_order:"Заказать букет",
         hero_kicker:"Цветы, которые выглядят как праздник",
-        hero_h1:"Razalija — свежие, красивые цветы из Межапаркса",
+        hero_h1:"Razalija — свежие, красивые цветы из Межапарка",
         hero_sub:"Выберите готовый букет в галерее и оформите заявку за минуту. Мы уточним детали и всё сделаем так, чтобы выглядело идеально.",
         hero_btn1:"Выбрать букет", hero_btn2:"Оставить заявку",
         services_h2:"Услуги",
@@ -1462,7 +1463,7 @@
         cart_checkout:"Заказать в WhatsApp", pcs:"шт.", per_unit:"/ шт.", in_order:"В заказе:", added:"✓ Добавлено",
         ct_h2:"Связаться и заказать",
         ct_sub:"Соберите заказ в галерее выше — его состав и сумма автоматически появятся в сообщении. Проверьте текст и отправьте его нам прямо в WhatsApp.",
-        ct_map_title:"Где нас найти", ct_addr:"Кокнесес проспект 18, Рига, LV-1014 · Межапаркс",
+        ct_map_title:"Где нас найти", ct_addr:"Кокнесес проспект 18, Рига, LV-1014 · Межапарк",
         hours1:"Пн–Чт 8:00–19:30", hours2:"Пт 8:00–20:00", hours3:"Сб 9:00–18:00", hours4:"Вс 10:00–17:00",
         ct_openmap:"Открыть на карте",
         wa_online:"в сети", wa_today:"Сегодня",
@@ -1577,18 +1578,23 @@
 
     // -------- Bouquets data
     const bouquets = [
-      { id:"p1",  name:"Peonija — sezonāli ziedi (maijs–jūlijs)", price:250, includes:"Sezonāli ziedi, maijs–jūlijs · 50 gab.", url:"https://ik.imagekit.io/coworker/Razalija/products/1.png" },
-      { id:"p2",  name:"Kompozīcija Nr.1",  price:45,  includes:"Kompozīcija kastē.", url:"https://ik.imagekit.io/coworker/Razalija/products/2.png" },
-      { id:"p3",  name:"Ziedu pušķis Nr.2", price:50,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/3.png" },
-      { id:"p4",  name:"Ziedu pušķis Nr.3", price:70,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/4.png" },
-      { id:"p5",  name:"Ziedu pušķis Nr.4", price:38,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/5.png" },
-      { id:"p6",  name:"Ziedu pušķis Nr.5", price:80,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/6.png" },
-      { id:"p7",  name:"Ziedu pušķis Nr.6", price:40,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/7.png" },
-      { id:"p8",  name:"Ziedu pušķis Nr.7", price:55,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/10.png" },
-      { id:"p9",  name:"Ziedu pušķis Nr.8", price:55,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/8.png" },
-      { id:"p10", name:"Ziedu pušķis Nr.9", price:55,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/9.png" },
-      { id:"p11", name:"Ziedu pušķis Nr.10", price:100, includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", url:"https://ik.imagekit.io/coworker/Razalija/products/11.png" }
+      { id:"p1",  name:"Peonija — sezonāli ziedi (maijs–jūlijs)", name_ru:"Пион — сезонные цветы (май–июль)", price:250, includes:"Sezonāli ziedi, maijs–jūlijs · 50 gab.", includes_ru:"Сезонные цветы, май–июль · 50 шт.", url:"https://ik.imagekit.io/coworker/Razalija/products/1.png" },
+      { id:"p2",  name:"Kompozīcija Nr.1",  name_ru:"Композиция №1",  price:45,  includes:"Kompozīcija kastē.", includes_ru:"Композиция в коробке.", url:"https://ik.imagekit.io/coworker/Razalija/products/2.png" },
+      { id:"p3",  name:"Ziedu pušķis Nr.2", name_ru:"Букет цветов №2", price:50,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", includes_ru:"Свежие сезонные цветы, ручная работа, упаковка.", url:"https://ik.imagekit.io/coworker/Razalija/products/3.png" },
+      { id:"p4",  name:"Ziedu pušķis Nr.3", name_ru:"Букет цветов №3", price:70,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", includes_ru:"Свежие сезонные цветы, ручная работа, упаковка.", url:"https://ik.imagekit.io/coworker/Razalija/products/4.png" },
+      { id:"p5",  name:"Ziedu pušķis Nr.4", name_ru:"Букет цветов №4", price:38,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", includes_ru:"Свежие сезонные цветы, ручная работа, упаковка.", url:"https://ik.imagekit.io/coworker/Razalija/products/5.png" },
+      { id:"p6",  name:"Ziedu pušķis Nr.5", name_ru:"Букет цветов №5", price:80,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", includes_ru:"Свежие сезонные цветы, ручная работа, упаковка.", url:"https://ik.imagekit.io/coworker/Razalija/products/6.png" },
+      { id:"p7",  name:"Ziedu pušķis Nr.6", name_ru:"Букет цветов №6", price:40,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", includes_ru:"Свежие сезонные цветы, ручная работа, упаковка.", url:"https://ik.imagekit.io/coworker/Razalija/products/7.png" },
+      { id:"p8",  name:"Ziedu pušķis Nr.7", name_ru:"Букет цветов №7", price:55,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", includes_ru:"Свежие сезонные цветы, ручная работа, упаковка.", url:"https://ik.imagekit.io/coworker/Razalija/products/10.png" },
+      { id:"p9",  name:"Ziedu pušķis Nr.8", name_ru:"Букет цветов №8", price:55,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", includes_ru:"Свежие сезонные цветы, ручная работа, упаковка.", url:"https://ik.imagekit.io/coworker/Razalija/products/8.png" },
+      { id:"p10", name:"Ziedu pušķis Nr.9", name_ru:"Букет цветов №9", price:55,  includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", includes_ru:"Свежие сезонные цветы, ручная работа, упаковка.", url:"https://ik.imagekit.io/coworker/Razalija/products/9.png" },
+      { id:"p11", name:"Ziedu pušķis Nr.10", name_ru:"Букет цветов №10", price:100, includes:"Svaigi sezonas ziedi, roku darbs, iepakojums.", includes_ru:"Свежие сезонные цветы, ручная работа, упаковка.", url:"https://ik.imagekit.io/coworker/Razalija/products/11.png" }
     ];
+
+    // Localized accessors for bouquet fields
+    function bName(b){ return (lang === 'ru' && b && b.name_ru) ? b.name_ru : (b ? b.name : ''); }
+    function bInc(b){ return (lang === 'ru' && b && b.includes_ru) ? b.includes_ru : (b ? b.includes : ''); }
+    function bById(id){ return bouquets.find(x => x.id === id); }
 
 
     // -------- Bouquets UI wiring
@@ -1639,7 +1645,7 @@
       const img = document.createElement('img');
       img.className = 'bouquet-img' + (idx === 0 ? ' active' : '');
       img.src = opt(b.url, 1000);
-      img.alt = b.name;
+      img.alt = bName(b);
       img.loading = "lazy";
       imgWrap.appendChild(img);
       return img;
@@ -1655,13 +1661,13 @@
 
       const img = document.createElement('img');
       img.src = opt(b.url, 480);
-      img.alt = b.name;
+      img.alt = bName(b);
       img.loading = "lazy";
 
 
       const tag = document.createElement('div');
       tag.className = 'tag';
-      tag.textContent = b.name;
+      tag.textContent = bName(b);
 
 
       const price = document.createElement('div');
@@ -1697,9 +1703,9 @@
       bigImgs.forEach((el, idx) => el.classList.toggle('active', idx === i));
       thumbEls.forEach((el, idx) => el.classList.toggle('active', idx === i));
 
-      bSideTitle.textContent = `${b.name} · € ${b.price}`;
-      bSideIncludes.textContent = b.includes;
-      bBadgeName.textContent = b.name;
+      bSideTitle.textContent = `${bName(b)} · € ${b.price}`;
+      bSideIncludes.textContent = bInc(b);
+      bBadgeName.textContent = bName(b);
       bBadgePrice.textContent = `€ ${b.price}`;
 
       selectedBouquet = b;
@@ -1805,7 +1811,7 @@
 
     // ===== Cart logic =====
     function cartCount(){ return cart.reduce((n,it)=>n+it.qty,0); }
-    function cartSum(){ return cart.reduce((s,it)=>s+it.price*it.qty,0); }
+    function cartSum(){ return cart.reduce((s,it)=>{ const b=bById(it.id); return s + (b?b.price:0)*it.qty; },0); }
 
     function renderCart(){
       const count = cartCount();
@@ -1817,16 +1823,17 @@
       } else {
         cartEmptyEl.style.display = 'none';
         cart.forEach(it => {
+          const b = bById(it.id); if (!b) return;
           const row = document.createElement('div');
           row.className = 'cart-item';
           row.innerHTML =
-            `<img class="cart-thumb" src="${opt(it.url,160)}" alt="${it.name}" loading="lazy">` +
-            `<div class="cart-meta"><div class="cart-name">${it.name}</div>` +
-            `<div class="cart-unit">€ ${it.price} ${t('per_unit')}</div></div>` +
+            `<img class="cart-thumb" src="${opt(b.url,160)}" alt="${bName(b)}" loading="lazy">` +
+            `<div class="cart-meta"><div class="cart-name">${bName(b)}</div>` +
+            `<div class="cart-unit">€ ${b.price} ${t('per_unit')}</div></div>` +
             `<div class="cart-qty"><button type="button" data-act="dec" aria-label="−">−</button>` +
             `<span>${it.qty}</span>` +
             `<button type="button" data-act="inc" aria-label="+">+</button></div>` +
-            `<div class="cart-line">€ ${it.price * it.qty}</div>` +
+            `<div class="cart-line">€ ${b.price * it.qty}</div>` +
             `<button class="cart-remove" type="button" data-act="rm" aria-label="×">&times;</button>`;
           row.querySelector('[data-act="dec"]').addEventListener('click', () => changeQty(it.id, -1));
           row.querySelector('[data-act="inc"]').addEventListener('click', () => changeQty(it.id, 1));
@@ -1850,7 +1857,7 @@
       n = n || 1;
       const ex = cart.find(it => it.id === b.id);
       if (ex) ex.qty = Math.min(99, ex.qty + n);
-      else cart.push({ id:b.id, name:b.name, price:b.price, qty:n, url:b.url });
+      else cart.push({ id:b.id, qty:n });
       renderCart();
     }
     function changeQty(id, d){
@@ -1877,8 +1884,9 @@
       if (!cart.length) return '';
       let msg = t('draft_intro') + '\n';
       cart.forEach((it, i) => {
-        msg += `${i + 1}. ${it.name}`;
-        msg += it.qty > 1 ? ` × ${it.qty} — € ${it.price * it.qty}\n` : ` — € ${it.price}\n`;
+        const b = bById(it.id); if (!b) return;
+        msg += `${i + 1}. ${bName(b)}`;
+        msg += it.qty > 1 ? ` × ${it.qty} — € ${b.price * it.qty}\n` : ` — € ${b.price}\n`;
       });
       msg += `${t('draft_total')} ${cartSum()}\n`;
       msg += t('draft_outro');
@@ -1899,8 +1907,8 @@
       lbIndex = (i + bouquets.length) % bouquets.length;
       const b = bouquets[lbIndex];
       lbImg.src = opt(b.url, 1200);
-      lbImg.alt = b.name;
-      lbName.textContent = b.name;
+      lbImg.alt = bName(b);
+      lbName.textContent = bName(b);
       lbPrice.textContent = `€ ${b.price}`;
     }
     function openLightbox(i){
@@ -1952,6 +1960,15 @@
     }
 
 
+    function refreshBouquetTexts(){
+      const b = selectedBouquet || bouquets[0];
+      bSideTitle.textContent = `${bName(b)} · € ${b.price}`;
+      bSideIncludes.textContent = bInc(b);
+      bBadgeName.textContent = bName(b);
+      thumbEls.forEach((el, idx) => { const tg = el.querySelector('.tag'); if (tg) tg.textContent = bName(bouquets[idx]); });
+      if (lightbox.classList.contains('open')) lbShow(lbIndex);
+    }
+
     // ===== Language switch + apply translations =====
     function applyI18n(){
       document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.getAttribute('data-i18n')); });
@@ -1961,6 +1978,7 @@
       document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
       const pb = document.getElementById('privacyBody');
       if (pb) pb.innerHTML = t('privacy_html');
+      refreshBouquetTexts();
       updateTotal();
       renderCart();
       refreshAutoDraft();
