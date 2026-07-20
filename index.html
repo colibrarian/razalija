@@ -1039,6 +1039,31 @@
       opacity:0;
     }
     .cart-bar.show{ transform: translate(-50%, 0); opacity:1; }
+    body.consent-open .cart-bar.show{ bottom: 100px; }
+
+    /* Privacy consent banner */
+    .consent{
+      position:fixed; left:0; right:0; bottom:0; z-index:108;
+      display:none; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;
+      padding:14px clamp(14px,4vw,28px);
+      background:rgba(255,255,255,.97);
+      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+      border-top:1px solid var(--stroke);
+      box-shadow:0 -10px 30px rgba(18,12,28,.10);
+      padding-bottom: max(14px, env(safe-area-inset-bottom));
+    }
+    body.consent-open .consent{ display:flex; }
+    .consent-body{ font-size:13.5px; line-height:1.5; color:rgba(var(--ink2),.9); max-width:640px }
+    .consent-link{
+      background:none; border:none; padding:0; margin-left:4px; cursor:pointer;
+      color:var(--violet); font:inherit; font-size:13.5px; text-decoration:underline; text-underline-offset:2px;
+    }
+    .consent-link:hover{ opacity:.85 }
+    .consent-ok{ padding:11px 26px; white-space:nowrap; flex:0 0 auto }
+    @media (max-width:560px){
+      .consent{ gap:10px }
+      .consent-ok{ width:100% }
+    }
     .cart-bar-ic{ position:relative; width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,.18); display:grid; place-items:center; flex:0 0 auto }
     .cart-bar-ic svg{ width:22px; height:22px; fill:#fff }
     .cart-bar-badge{
@@ -1416,6 +1441,16 @@
   </main>
 
 
+  <!-- Privacy consent banner (first visit) -->
+  <div class="consent" id="consent" role="region" aria-label="Privātums">
+    <div class="consent-body">
+      <span data-i18n="consent_txt">Vietnē izmantojam tikai nepieciešamās tehniskās funkcijas (piemēram, valodas izvēli). Turpinot lietot vietni, tu piekrīti mūsu privātuma politikai.</span>
+      <button class="consent-link" id="consentLink" type="button" data-i18n="consent_link">Lasīt politiku</button>
+    </div>
+    <button class="btn primary consent-ok" id="consentOk" type="button" data-i18n="consent_ok">Piekrītu</button>
+  </div>
+
+
   <!-- Floating mini cart bar -->
   <button class="cart-bar" id="cartBar" type="button" aria-label="Grozs">
     <span class="cart-bar-ic" aria-hidden="true">
@@ -1536,6 +1571,8 @@
         wa_greeting:"Labdien! 🌸 Priecāsimies par tavu pasūtījumu. Izvēlies pušķi un nosūti ziņu — atbildēsim dažu minūšu laikā.",
         wa_preview_ph:"Tava ziņa parādīsies šeit...", wa_input_ph:"Tava ziņa...",
         footer_privacy:"Privātuma politika",
+        consent_txt:"Vietnē izmantojam tikai nepieciešamās tehniskās funkcijas (piemēram, valodas izvēli). Turpinot lietot vietni, tu piekrīti mūsu privātuma politikai.",
+        consent_link:"Lasīt politiku", consent_ok:"Piekrītu",
         draft_intro:"Labdien! Vēlos pasūtīt:", draft_total:"Kopā: €",
         draft_outro:"Lūdzu, pasakiet, vai tas ir pieejams un uz kuru laiku to var sagatavot.",
         draft_default:"Labdien! Vēlos pasūtīt ziedus. ",
@@ -1561,8 +1598,7 @@
           "<h3>8. Tavas tiesības</h3>"+
           "<p>Tev ir tiesības piekļūt saviem datiem, tos labot, dzēst, ierobežot apstrādi, iebilst un uz datu pārnesamību. Sūdzību vari iesniegt Datu valsts inspekcijai (Latvija, dvi.gov.lv).</p>"+
           "<h3>9. Kontakti</h3>"+
-          "<p>Jautājumos par datu apstrādi raksti uz e-pastu web@erewhile.digital vai WhatsApp +371 26 068 971.</p>"+
-          "<p class='muted'>Pirms publicēšanas pārbaudi un pielāgo tekstu kopā ar juristu.</p>"
+          "<p>Jautājumos par datu apstrādi raksti uz e-pastu web@erewhile.digital vai WhatsApp +371 26 068 971.</p>"
       },
       ru: {
         nav_addr:"Кокнесес проспект 18, Рига",
@@ -1599,6 +1635,8 @@
         wa_greeting:"Здравствуйте! 🌸 Будем рады вашему заказу. Выберите букет и отправьте сообщение — ответим в течение нескольких минут.",
         wa_preview_ph:"Ваше сообщение появится здесь...", wa_input_ph:"Ваше сообщение...",
         footer_privacy:"Политика конфиденциальности",
+        consent_txt:"Мы используем только необходимые технические функции (например, выбор языка). Продолжая пользоваться сайтом, вы соглашаетесь с нашей политикой конфиденциальности.",
+        consent_link:"Читать политику", consent_ok:"Принимаю",
         draft_intro:"Здравствуйте! Хочу заказать:", draft_total:"Итого: €",
         draft_outro:"Подскажите, пожалуйста, доступно ли это и на какое время можно подготовить.",
         draft_default:"Здравствуйте! Хочу заказать цветы. ",
@@ -1624,8 +1662,7 @@
           "<h3>8. Ваши права</h3>"+
           "<p>Вы имеете право на доступ к своим данным, их исправление, удаление, ограничение обработки, возражение и переносимость данных. Жалобу можно подать в Инспекцию данных (Латвия, Datu valsts inspekcija, dvi.gov.lv).</p>"+
           "<h3>9. Контакты</h3>"+
-          "<p>По вопросам обработки данных пишите на e-mail web@erewhile.digital или в WhatsApp +371 26 068 971.</p>"+
-          "<p class='muted'>Перед публикацией проверьте и адаптируйте текст вместе с юристом.</p>"
+          "<p>По вопросам обработки данных пишите на e-mail web@erewhile.digital или в WhatsApp +371 26 068 971.</p>"
       }
     };
 
@@ -2247,6 +2284,18 @@
     if (privacyCloseBtn) privacyCloseBtn.addEventListener('click', closePrivacy);
     privacyModal.addEventListener('click', (e) => { if (e.target === privacyModal) closePrivacy(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && privacyModal.classList.contains('open')) closePrivacy(); });
+
+    // ===== Privacy consent banner (first visit) =====
+    const consentOk = document.getElementById('consentOk');
+    const consentLink = document.getElementById('consentLink');
+    let privacyAccepted = false;
+    try { privacyAccepted = localStorage.getItem('raz_privacy_ok') === '1'; } catch(e){}
+    if (!privacyAccepted) document.body.classList.add('consent-open');
+    if (consentLink) consentLink.addEventListener('click', openPrivacy);
+    if (consentOk) consentOk.addEventListener('click', () => {
+      document.body.classList.remove('consent-open');
+      try { localStorage.setItem('raz_privacy_ok', '1'); } catch(e){}
+    });
 
     // Apply selected language on load
     applyI18n();
